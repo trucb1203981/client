@@ -32,7 +32,7 @@
 				</v-card>
 				<v-content v-if="menu" v-for="(data, index) in menu" :key="index">
 					<v-subheader v-if="data.products.length>0"  :id="'item_'+data.id"><span >{{data.name | upperCase }} ({{data._name | upperCase}})</span></v-subheader>
-					<v-card hover class="mb-2" v-for="(item, i) in data.products" :key="i">	
+					<v-card hover class="mb-4" v-for="(item, i) in data.products" :key="i">	
 						<v-layout row wrap>
 							<v-flex xs12 md5 d-flex>
 								<v-card-media :src="image(item.image)" height="200px">
@@ -57,8 +57,6 @@
 						</v-layout>
 					</v-card>
 				</v-content>
-
-
 			</v-flex>
 			<!-- RIGHT NAVBAR DESKTOP -->
 			<v-flex xs12 md4  ref="target_navbar_right" class="hidden-sm-and-down">
