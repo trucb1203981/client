@@ -1,6 +1,6 @@
 <template>
 	<v-container fluid>
-		<v-layout>
+		<v-layout v-if="store!=null">
 			<v-flex xs12 md8>
 				<v-card color="white" v-if="store.coupon" flat>
 					<v-tooltip v-model="showTooltip" top>

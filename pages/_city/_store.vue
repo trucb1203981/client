@@ -1,6 +1,6 @@
 <template>
 	<div ref="target_store" fluid class="mt-4" v-scroll="onScroll">
-		<v-toolbar :fixed="offsetTop>offsetTab" color="white" class="elevation-0 scroll-y"  flat dense style="max-height: 400px" tabs> 
+		<v-toolbar :fixed="offsetTop>offsetTab" color="white" class="elevation-0 scroll-y"  flat dense style="max-height: 400px" tabs  v-if="store != null"> 
 			<v-btn flat :to="{path: '/'}" icon>
 				<v-icon>chevron_left</v-icon>
 			</v-btn>
@@ -17,7 +17,7 @@
 				</v-tab>
 			</v-tabs>
 		</v-toolbar>
-		<v-layout>
+		<v-layout  v-if="store != null">
 			<v-flex xs1 md3>
 				<v-navigation-drawer hide-overlay clipped floating class="transparent">
 					<v-container>
@@ -85,7 +85,7 @@
 				</v-navigation-drawer>
 			</v-flex>
 			<v-flex xs10 md9>
-				<nuxt-child :key="$route.params.store" :store.sync="store"/>
+				<nuxt-child  v-if="store != null" :key="$route.params.store" :store.sync="store"/>
 			</v-flex>		
 		</v-layout>			
 	</div>
@@ -102,7 +102,7 @@ export default {
 	mixins: [index],
 	asyncData({params}) {
 		return {
-			store: {},
+			store: null,
 			city: {},
 			activeSearch: false,
 			offsetTab: 0,
@@ -115,6 +115,7 @@ export default {
 				if(response.status == 200) {
 					this.$store.commit('CHANGE_CITY', parseInt(Cookies.get('flag_c')))
 					this.store = response.data.store
+					console.log(this.store)
 					this.$store.commit('UPDATE_CITY', response.data.city)
 				}
 			})

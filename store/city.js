@@ -31,7 +31,7 @@ const mutations = {
 const actions = {
 	//FETCH CITIES
 	fetchCity: ({commit}) => new Promise((resolve, reject) => {
-		axios.get(fetchCityURL, {withCredentials:true}).then(response => {
+		axios.get('/api/FetchCities', {withCredentials:true}).then(response => {
 			if(response.status == 200) {
 				commit('FETCH_CITY', response.data)
 			}

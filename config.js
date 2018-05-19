@@ -8,20 +8,19 @@ export const getHeader = function(){
 	return headers
 }
 
-export const baseURL            = 'http://localhost:8000'
+export const baseURL 			= 'http://api.dofuu.com'
+
+export const fetchCityURL       = '/api/FetchCities'
+export const getCityHasDealURL  = '/api/GetCityInformationHasDeal'
 
 
-export const fetchCityURL       = baseURL+'/api/FetchCities'
-export const getCityHasDealURL  = baseURL+ '/api/GetCityInformationHasDeal'
-
-
-export const fetchTypeURL       = baseURL+ '/api/FetchTypes'
+export const fetchTypeURL       = '/api/FetchTypes'
 //API STORE
-export const getStoreURL        = baseURL+ '/api/GetStore'
-export const getStoreHasDealURL = baseURL+ '/api/LoadStore'
+export const getStoreURL        = '/api/GetStore'
+export const getStoreHasDealURL = '/api/LoadStore'
 //API AUTH
-export const loginURL           = baseURL+ '/api/login'
-export const registerURL        = baseURL+ '/api/register'
-export const logoutURL          = baseURL+ '/api/logout'
-export const tokenURL           = baseURL+'/oauth/token'
-export const getUserURL         = baseURL+ '/api/df'
+export const loginURL           = '/api/login'
+export const registerURL        = '/api/register'
+export const logoutURL          = '/api/logout'
+export const tokenURL           = '/oauth/token'
+export const getUserURL         = '/api/df'
