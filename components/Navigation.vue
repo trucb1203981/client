@@ -11,7 +11,7 @@
 			</v-btn>		
 		</v-system-bar>
 		<v-toolbar extended dense color="white" :clipped-left="$vuetify.breakpoint.lgAndUp" class="elevation-0">
-			<v-toolbar-title class="red--text text-accent-2" style="width: 170px">
+			<v-toolbar-title class="red--text text-accent-2" :style="$vuetify.breakpoint.lgAndUp ? 'width: 170px': 'width: 100px'">
 				<v-list-tile :exact="false" active-class="red--text" :to="{path: '/'}">
 					DOFUU
 				</v-list-tile>  
@@ -21,13 +21,12 @@
 			v-model="keywords"
 			color="red accent-2"
 			label="Tìm kiếm"
-			class="hidden-sm-and-down"
 			offset-x
 			@keyup.enter="search"
 			:append-icon="'search'"
 			:append-icon-cb="search"
 			></v-text-field>
-			<v-spacer></v-spacer>
+			<v-spacer class="hidden-sm-and-down"></v-spacer>
 			<v-toolbar-items>
 				<v-menu id="menu"
 				v-if="isAuth && currentUser != null"
@@ -87,9 +86,9 @@
 			</v-menu>
 		</v-toolbar-items>	
 		<v-toolbar color="white" slot="extension"  dense flat>
-			<v-select flat :items="cities" v-model="cityCurrent" item-value="id" dense light solo-inverted item-text="name" return-object style="max-width:150px" class="ml-3 mr-3 hidden-sm-and-down" color="red accent-2">
+			<v-select flat :items="cities" v-model="cityCurrent" item-value="id" dense light solo-inverted item-text="name" return-object style="max-width:150px" class="ml-3 mr-3" color="red accent-2">
 			</v-select >
-			<v-toolbar-items class="hidden-sm-and-down">
+			<v-toolbar-items>
 				<v-menu bottom offset-y>
 					<v-btn slot="activator" flat>Danh mục
 						<v-icon right>expand_more</v-icon>
@@ -98,6 +97,7 @@
 						<v-list-tile nuxt :to="{name: 'city-tat-ca-dia-diem', params: {city: currentCity.slug }}">
 							<v-list-tile-title>Tất cả</v-list-tile-title>
 						</v-list-tile>
+						
 						<v-list-tile v-for="(item, index) in types" :key="index" nuxt :to="{name: 'city-dia-diem-type', params: {city: currentCity.slug, type: item.slug }}">
 							<v-list-tile-title>{{ item.name }}</v-list-tile-title>
 						</v-list-tile>

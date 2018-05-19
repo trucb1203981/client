@@ -14,7 +14,7 @@ const mutations = {
 
 const actions = {
 	fetchType: ({commit}, payload) => new Promise((resolve, reject) => {
-		axios.get('/api/FetchCities', {withCredentials:true}).then(response => {
+		axios.get('/api/FetchTypes', {withCredentials:true}).then(response => {
 			if(response.status == 200) {
 				commit('FETCH_TYPE', response.data)
 			}
