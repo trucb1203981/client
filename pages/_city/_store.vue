@@ -30,7 +30,6 @@
 					</v-tab> -->
 
 				</v-tabs>
-				
 			</v-toolbar>
 			<v-layout row wrap v-if="store != null">
 				<v-flex xs12 md3>

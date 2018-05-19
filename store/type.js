@@ -3,7 +3,7 @@ import {fetchTypeURL, getHeader} from '~/config.js'
 import Cookies from 'js-cookie'
 
 const state = {
-	types: {},
+	types: [],
 }
 
 const mutations = {

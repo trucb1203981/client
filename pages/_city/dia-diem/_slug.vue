@@ -1,7 +1,7 @@
 <template>
-	<v-container grid-list-lg v-scroll="onScroll" v-if="stores.length>0">
+	<v-container grid-list-lg v-scroll="onScroll" >
 		<v-card flat >				
-			<v-toolbar color="white" flat dense>
+			<v-toolbar color="white" flat dense v-show="!loading">
 				<v-toolbar-title>
 					ĐỊA ĐIỂM {{currentType.name.toUpperCase()}}
 				</v-toolbar-title>
@@ -72,7 +72,7 @@ export default {
 			trigger:300,
 			currentCity: null,
 			end: false,
-			loading: false
+			loading: true
 		}
 	},
 	methods: {
@@ -85,10 +85,10 @@ export default {
 			}
 		},
 		getStoreByType: async function(id) {
-			const type = this.$store.getters.getTypeBySlug(this.$route.params.type)
+			const type = this.$store.getters.getTypeBySlug(this.$route.params.slug)
 			const data = {typeId: type.id, pageSize: this.pageSize, offset: this.offset}
 			if(!this.end) {
-				this.loading = await true
+				// this.loading = await true
 				await axios.post('/api/GetStoreByType/'+id, data, {withCredentials:true}).then(response => {
 					if(response.status === 200) {
 
@@ -108,11 +108,10 @@ export default {
 	},
 	computed: {
 		currentType: function() {
-			return this.$store.getters.getTypeBySlug(this.$route.params.type)
+			return this.$store.getters.getTypeBySlug(this.$route.params.slug)
 		}
 	},
 	mounted() {
-
 		this.$store.dispatch('fetchCity').then(response => {
 			if(response.status === 200) {
 				this.currentCity = this.$store.getters.getCityBySlug(this.$route.params.city)
