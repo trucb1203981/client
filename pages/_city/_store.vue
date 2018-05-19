@@ -13,20 +13,22 @@
 		</v-dialog>
 		<v-content v-show="!loading">
 			<v-toolbar :fixed="offsetTop>offsetTab" color="white" class="elevation-0 scroll-y"  flat dense style="max-height: 400px" tabs  v-if="store != null"> 
+
 				<v-btn flat :to="{path: '/'}" icon>
-					<v-icon>chevron_left</v-icon>
+					<v-icon>arrow_back</v-icon>
 				</v-btn>
-				<v-toolbar-title class="red--text text-accent-2" style="width: 300px">
+				<v-toolbar-title class="red--text text-accent-2 hidden-sm-and-down" style="width: 300px">
 					{{store.name}}
 				</v-toolbar-title>
-				<v-tabs>
+				<v-tabs show-arrows>
 					<v-tabs-slider color="yellow"></v-tabs-slider>
 					<v-tab nuxt exact :to="{name: 'city-store', params: {city: $route.params.city, store: $route.params.store}}">
 						Thực Đơn
 					</v-tab>
-					<v-tab nuxt exact :to="{name: 'city-store-about', params: {city: $route.params.city, store: $route.params.store}}">
+					<!-- <v-tab nuxt exact :to="{name: 'city-store-about', params: {city: $route.params.city, store: $route.params.store}}">
 						Giới thiệu
-					</v-tab>
+					</v-tab> -->
+
 				</v-tabs>
 				
 			</v-toolbar>
@@ -143,7 +145,7 @@ export default {
 		this.getStore()
 	},
 	mounted() {
-		// this.offsetTab = this.$refs.target_store.offsetTop
+		this.offsetTab = this.$refs.target_store.offsetTop
 	}
 }
 </script>

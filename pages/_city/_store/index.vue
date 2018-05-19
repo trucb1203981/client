@@ -73,7 +73,7 @@
 
 								{{tab.title}}
 
-								<v-badge color="indigo" v-if="index == 1" overlap>
+								<v-badge color="blue" v-if="index == 1" overlap>
 									<span slot="badge" v-if="counts>0">{{counts}}</span>
 									<v-icon left>shopping_cart</v-icon>						 
 								</v-badge>
@@ -170,7 +170,7 @@
 
 						{{tab.title}}
 
-						<v-badge color="indigo" v-if="index == 1" overlap>
+						<v-badge color="blue" v-if="index == 1" overlap>
 							<span slot="badge" v-if="counts>0">{{counts}}</span>
 							<v-icon left>shopping_cart</v-icon>						 
 						</v-badge>
@@ -247,9 +247,14 @@
 				</v-card-actions>
 			</v-card>
 		</v-navigation-drawer>
+
 		<v-btn fixed bottom right icon color="red accent-3" dark @click.stop="drawer =! drawer" class="hidden-lg-only hidden-md-only">
-			<v-icon>menu</v-icon>
+			<v-badge color="blue">
+				<span slot="badge" v-if="counts>0">{{counts}}</span>
+				<v-icon>menu</v-icon>
+			</v-badge>
 		</v-btn>
+
 		<!-- RIGHT NAVBAR MOBILE -->
 	</v-container>
 </template>
@@ -295,7 +300,7 @@ export default {
 			messageTooltip: '',
 			storeInfo: null,
 			search: '',
-			drawer: false
+			drawer: true
 		}
 	},
 	methods: {
