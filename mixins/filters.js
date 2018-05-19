@@ -2,7 +2,9 @@ import Vue from 'vue'
 import moment from 'moment'
 import numeral from 'numeral'
 Vue.filter('upperCase', function(value) {
-	return value.toUpperCase()
+	if(value) {
+		return value.toUpperCase()
+	}
 })
 
 Vue.filter('formatTime', function(time) {
@@ -18,7 +20,9 @@ Vue.filter('formatDate', function(date) {
 })
 
 Vue.filter('formatPrice', function(price) {
-	return numeral(price).format('0,0$')
+	if(price) {		
+		return numeral(price).format('0,0$')
+	}
 })
 
 Vue.filter('subPrice', function(price, qty) {
