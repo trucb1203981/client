@@ -1,6 +1,6 @@
 <template>
 	<v-container fluid>
-		<v-layout>
+		<v-layout v-if="!loading">
 			<v-flex xs12 md8>
 				<v-card color="white" v-if="store.coupon" flat>
 					<v-tooltip v-model="showTooltip" top>
@@ -196,7 +196,6 @@ export default {
 				mm:0,
 				ss:0
 			},
-			loading:true,
 			showTooltip: false,
 			messageTooltip: '',
 			storeInfo: null,
@@ -321,7 +320,8 @@ export default {
 			cart: state      => Object.assign({}, state.cartStore.cart),
 			isAuth: state    => state.authStore.isAuth,
 			show: state      => state.cartStore.show,
-			store: state => state.storeStore.store
+			store: state     => state.storeStore.store,
+			loading: state   => state.storeStore.loading
 		}),
 		options: function() {
 			return {
