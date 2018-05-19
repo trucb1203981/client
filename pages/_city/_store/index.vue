@@ -1,6 +1,6 @@
 <template>
 	<v-container fluid>
-		<v-layout v-if="store!=null">
+		<v-layout>
 			<v-flex xs12 md8>
 				<v-card color="white" v-if="store.coupon" flat>
 					<v-tooltip v-model="showTooltip" top>
@@ -79,7 +79,7 @@
 								</v-badge>
 								
 								<v-icon v-if="index == 0">assignment</v-icon>
-							
+
 							</v-tab>
 
 						</v-tabs>
@@ -176,7 +176,6 @@ const CheckoutDialog = () => ({
   timeout: 3000
 })
 export default {
-	props: ['store'],
 	mixins: [index],
 	components: {
 		'vue-dialog' :CheckoutDialog
@@ -197,6 +196,7 @@ export default {
 				mm:0,
 				ss:0
 			},
+			loading:true,
 			showTooltip: false,
 			messageTooltip: '',
 			storeInfo: null,
@@ -320,7 +320,8 @@ export default {
 			tabs: state      => state.storeStore.headers,
 			cart: state      => Object.assign({}, state.cartStore.cart),
 			isAuth: state    => state.authStore.isAuth,
-			show: state      => state.cartStore.show
+			show: state      => state.cartStore.show,
+			store: state => state.storeStore.store
 		}),
 		options: function() {
 			return {
@@ -346,12 +347,9 @@ export default {
 			}
 		}
 	},
-	watch: {
-		'store': function(val, oldVal) {
-			this.$store.dispatch('getToCart', val.id)
-		}
-	},
-	mounted: async function() {		
+	mounted: async function() {
+		this.$store.dispatch('getToCart', this.store.id)
+
 		this.offsetNavbarRight = this.$refs.target_navbar_right.offsetTop
 	},
 	beforeDestroy() {

@@ -1,5 +1,5 @@
 <template>
-	<div ref="target_store" fluid class="mt-4" v-scroll="onScroll">
+	<div ref="target_store" fluid class="mt-4" v-scroll="onScroll" v-show="!loading">
 		<v-toolbar :fixed="offsetTop>offsetTab" color="white" class="elevation-0 scroll-y"  flat dense style="max-height: 400px" tabs  v-if="store != null"> 
 			<v-btn flat :to="{path: '/'}" icon>
 				<v-icon>chevron_left</v-icon>
@@ -85,7 +85,7 @@
 				</v-navigation-drawer>
 			</v-flex>
 			<v-flex xs10 md9>
-				<nuxt-child  v-if="store != null" :key="$route.params.store" :store.sync="store"/>
+				<nuxt-child :key="$route.params.store" :store.sync="store"/>
 			</v-flex>		
 		</v-layout>			
 	</div>
@@ -102,21 +102,20 @@ export default {
 	mixins: [index],
 	asyncData({params}) {
 		return {
-			store: null,
 			city: {},
 			activeSearch: false,
 			offsetTab: 0,
+			loading:true
 		}
 	},
 	methods: {
 		getStore() {
 			const params = {_CID: this.$route.params.city, _SID: this.$route.params.store}
-			axios.get(getStoreURL, {params, withCredentials:true}).then(response => {
+			this.$store.dispatch('getStore', params).then(response => {
 				if(response.status == 200) {
 					this.$store.commit('CHANGE_CITY', parseInt(Cookies.get('flag_c')))
-					this.store = response.data.store
-					console.log(this.store)
 					this.$store.commit('UPDATE_CITY', response.data.city)
+					this.loading = false
 				}
 			})
 		},
@@ -126,7 +125,8 @@ export default {
 	},
 	computed: {
 		...mapState({
-			offsetTop: state => state.offsetTop
+			offsetTop: state => state.offsetTop,
+			store: state => state.storeStore.store
 		})
 	},
 	created() {
