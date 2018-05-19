@@ -7,6 +7,7 @@ const state = {
 	tabIndex:0,
 	store: null,
 	loading:false,
+	rightDrawer:false,
 	headers: [
 	{title: 'Danh mục'},
 	{title: 'Giỏ hàng'}
@@ -24,6 +25,9 @@ const mutations = {
 	},
 	LOADING_STORE(state) {
 		state.loading = !state.loading
+	},
+	STORE_NAV_RIGHT(state) {
+		state.rightDrawer = !state.rightDrawer
 	}
 }
 

@@ -8,7 +8,8 @@ export const getHeader = function(){
 	return headers
 }
 
-export const baseURL 			= 'http://api.dofuu.com'
+// export const baseURL 			= 'http://api.dofuu.com'
+export const baseURL 			= 'http://localhost:8000'
 
 export const fetchCityURL       = '/api/FetchCities'
 export const getCityHasDealURL  = '/api/GetCityInformationHasDeal'

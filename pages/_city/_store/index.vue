@@ -1,6 +1,6 @@
 <template>
-	<v-container fluid>
-		<v-layout v-show="!loading">
+	<v-container fluid grid-list-lg>
+		<v-layout child-flex wrap v-show="!loading">
 			<v-flex xs12 md8>
 				<v-card color="white" v-if="store.coupon" flat>
 					<v-tooltip v-model="showTooltip" top>
@@ -57,33 +57,33 @@
 						</v-layout>
 					</v-card>
 				</v-content>
+
+
 			</v-flex>
-			<!-- RIGHT NAVBAR -->
-			<v-flex xs12 md4 class="ml-4" ref="target_navbar_right">
-				<v-card :class="{'card--sticky' : offsetTop>offsetNavbarRight-50 && !$vuetify.breakpoint.xsOnly}">
+			<!-- RIGHT NAVBAR DESKTOP -->
+			<v-flex xs12 md4  ref="target_navbar_right" class="hidden-sm-and-down">
+				<v-card :class="{'card--sticky' : offsetTop>offsetNavbarRight-50 && !$vuetify.breakpoint.xsOnly}" style="z-index:4">
 
 					<v-toolbar	color="red"	dark extended flat>
 						<v-text-field  prepend-icon="search" label="Tìm kiếm món" solo-inverted class="mx-3" v-model="search" flat/>
 
-						<v-tabs icons-and-text slot="extension" centered :value="`item-${tabIndex}`"   color="transparent">
+						<v-tabs icons-and-text mobile-break-point="1264" slot="extension" grow :value="`item-${tabIndex}`"   color="transparent">
 
 							<v-tabs-slider color="yellow"></v-tabs-slider>
-							
+
 							<v-tab v-for="(tab, index) in tabs" :key="index" @click="changeTab(index)":href="`#item-${index}`" >
-								
+
 								{{tab.title}}
-								
+
 								<v-badge color="indigo" v-if="index == 1" overlap>
 									<span slot="badge" v-if="counts>0">{{counts}}</span>
-									<v-icon>shopping_cart</v-icon>						 
+									<v-icon left>shopping_cart</v-icon>						 
 								</v-badge>
-								
-								<v-icon v-if="index == 0">assignment</v-icon>
+
+								<v-icon left v-if="index == 0">assignment</v-icon>
 
 							</v-tab>
-
 						</v-tabs>
-
 					</v-toolbar>
 
 					<v-card-text v-if="tabIndex==0">
@@ -101,31 +101,34 @@
 						</v-list>
 					</v-card-text>
 					<v-card v-else-if="tabIndex==1" class="transparent">
-						<v-layout row wrap align-center class="pt-2 grey lighten-2 pb-2">
-							<v-data-table v-if="cart && cart.items.length>0" :items="cart.items" class="elevation-1 scroll-y" hide-actions hide-headers style="max-height:280px; overflow-x:hidden">
-								<template slot="items" slot-scope="props">
-									<td class="text-xs-left">{{props.item.name}}</td>
-									<td>
-										<v-layout column justify-center>
-											<v-flex md2 d-flex>
-												<v-btn icon ripple @click.stop="addToCart(props.item)">
-													<v-icon color="green">add_box</v-icon>
-												</v-btn>
-											</v-flex>
-											<v-flex md2 d-flex class="justify-center">
-												{{props.item.qty}}x
-											</v-flex>
-											<v-flex md2 d-flex>
-												<v-btn icon ripple @click.stop="minusToCart(props.item)">
-													<v-icon color="grey" >indeterminate_check_box</v-icon>
-												</v-btn>
-											</v-flex>
-										</v-layout>
-									</td>
-									<td>{{props.item.price | formatPrice}}</td>
-								</template>
-							</v-data-table>
-						</v-layout>
+						<v-card-text>
+							<v-layout row wrap align-center class="pt-2 pb-2">
+								<v-data-table v-if="cart && cart.items.length>0" :items="cart.items" class="elevation-1 scroll-y" hide-actions hide-headers style="max-height:280px; overflow-x:hidden">
+									<template slot="items" slot-scope="props">
+										<td class="text-xs-left">{{props.item.name}}</td>
+										<td>
+											<v-layout column justify-center>
+												<v-flex md2 d-flex>
+													<v-btn icon ripple @click.stop="addToCart(props.item)">
+														<v-icon color="green">add_box</v-icon>
+													</v-btn>
+												</v-flex>
+												<v-flex md2 d-flex class="justify-center">
+													{{props.item.qty}}x
+												</v-flex>
+												<v-flex md2 d-flex>
+													<v-btn icon ripple @click.stop="minusToCart(props.item)">
+														<v-icon color="grey" >indeterminate_check_box</v-icon>
+													</v-btn>
+												</v-flex>
+											</v-layout>
+										</td>
+										<td>{{props.item.price | formatPrice}}</td>
+									</template>
+								</v-data-table>
+							</v-layout>
+						</v-card-text>
+						
 						<v-divider></v-divider>
 						<v-layout row wrap>
 							<v-flex	xs12 sm12 md12 lg12>
@@ -156,6 +159,100 @@
 			</v-flex>
 		</v-layout>
 		<vue-dialog :store.sync="store"></vue-dialog>
+		<!-- RIGHT NAVBAR MOBILE -->
+		<v-navigation-drawer fixed :clipped="$vuetify.breakpoint.mdAndUp" v-model="drawer" right class="hidden-lg-only hidden-md-only">
+			<v-toolbar	color="red"	dark extended flat>
+				<v-text-field  prepend-icon="search" label="Tìm kiếm món" solo-inverted class="mx-3" v-model="search" flat/>
+
+				<v-tabs icons-and-text mobile-break-point="1264" slot="extension" grow :value="`item-${tabIndex}`"   color="transparent">
+
+					<v-tabs-slider color="yellow"></v-tabs-slider>
+
+					<v-tab v-for="(tab, index) in tabs" :key="index" @click="changeTab(index)":href="`#item-${index}`" >
+
+						{{tab.title}}
+
+						<v-badge color="indigo" v-if="index == 1" overlap>
+							<span slot="badge" v-if="counts>0">{{counts}}</span>
+							<v-icon left>shopping_cart</v-icon>						 
+						</v-badge>
+
+						<v-icon left v-if="index == 0">assignment</v-icon>
+
+					</v-tab>
+				</v-tabs>
+			</v-toolbar>
+
+			<v-list v-if="tabIndex==0" dense>
+				<template>
+					<v-list-tile v-for="item in store.catalogues" v-if="item.products.length>0" @click="goTo('#item_'+item.id)" :key="item.name">
+						<v-list-tile-content>
+							<v-list-tile-title>
+								{{item.name}}
+							</v-list-tile-title>
+							<v-list-tile-sub-title>
+								{{item._name}}
+							</v-list-tile-sub-title>
+						</v-list-tile-content>
+					</v-list-tile>
+				</template>
+			</v-list>
+
+			<v-card v-else-if="tabIndex==1" class="transparent" scrollable >
+				<v-data-table v-if="cart && cart.items.length>0" :items="cart.items" class="elevation-1 mt-2 scroll-y" hide-actions hide-headers style="max-height:280px; overflow-x:hidden" >
+					<template slot="items" slot-scope="props" >
+						<td class="text-xs-left">{{props.item.name}}</td>
+						<td>
+							<v-layout column justify-center>
+								<v-flex md2 d-flex>
+									<v-btn icon ripple @click.stop="addToCart(props.item)">
+										<v-icon color="green">add_box</v-icon>
+									</v-btn>
+								</v-flex>
+								<v-flex md2 d-flex class="justify-center">
+									{{props.item.qty}}x
+								</v-flex>
+								<v-flex md2 d-flex>
+									<v-btn icon ripple @click.stop="minusToCart(props.item)">
+										<v-icon color="grey" >indeterminate_check_box</v-icon>
+									</v-btn>
+								</v-flex>
+							</v-layout>
+						</td>
+						<td>{{props.item.price | formatPrice}}</td>
+					</template>
+				</v-data-table>
+				<v-divider></v-divider>
+				<v-layout row wrap>
+					<v-flex	xs12 sm12 md12 lg12>
+						<v-list dense> 
+							<v-list-tile>
+								<v-list-tile-content>Tổng:</v-list-tile-content>
+								<v-list-tile-content class="align-end">{{subTotal | formatPrice}}</v-list-tile-content>
+							</v-list-tile>
+							<v-list-tile>
+								<v-list-tile-content>
+									<span>Phí vận chuyển: <v-icon size="20" color="primary" @click="">help</v-icon></span>
+								</v-list-tile-content>
+								<v-list-tile-action class="align-end">
+									<span>  {{0 | formatPrice}} </span>
+								</v-list-tile-action>
+							</v-list-tile>
+						</v-list>
+					</v-flex>
+				</v-layout>
+				<v-divider></v-divider>
+				<v-card-actions>
+					<v-btn block :disabled="!cart || cart.items.length==0" color="red accent-2 white--text" dense @click.native="checkOut">
+						Gửi đơn hàng
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-navigation-drawer>
+		<v-btn fixed bottom right icon color="red accent-3" dark @click.stop="drawer =! drawer" class="hidden-lg-only hidden-md-only">
+			<v-icon>menu</v-icon>
+		</v-btn>
+		<!-- RIGHT NAVBAR MOBILE -->
 	</v-container>
 </template>
 
@@ -199,7 +296,8 @@ export default {
 			showTooltip: false,
 			messageTooltip: '',
 			storeInfo: null,
-			search: ''
+			search: '',
+			drawer: false
 		}
 	},
 	methods: {
@@ -321,7 +419,8 @@ export default {
 			isAuth: state    => state.authStore.isAuth,
 			show: state      => state.cartStore.show,
 			store: state     => state.storeStore.store,
-			loading: state   => state.storeStore.loading
+			loading: state   => state.storeStore.loading,
+			rightDrawer: state => state.storeStore.rightDrawer
 		}),
 		options: function() {
 			return {
@@ -354,6 +453,10 @@ export default {
 					this.offsetNavbarRight = this.$refs.target_navbar_right.offsetTop
 				}, 300)
 			}
+		},
+		'rightDrawer': function(val) {
+			console.log(val) 
+
 		}
 	},	
 	mounted: async function() {
