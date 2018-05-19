@@ -347,10 +347,20 @@ export default {
 			}
 		}
 	},
+	watch: {
+		'loading': function(val) {
+			if(!val) {
+				setTimeout(() => {
+					this.offsetNavbarRight = this.$refs.target_navbar_right.offsetTop
+				}, 300)
+			}
+		}
+	},	
 	mounted: async function() {
-		this.$store.dispatch('getToCart', this.store.id)
-
-		this.offsetNavbarRight = this.$refs.target_navbar_right.offsetTop
+		if(!this.loading) {
+			
+		}
+		this.$store.dispatch('getToCart', this.store.id)	
 	},
 	beforeDestroy() {
 		this.$store.commit('CLOSE_CHECKOUT')

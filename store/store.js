@@ -30,17 +30,18 @@ const mutations = {
 const actions = {
 	getStore: ({commit}, params) => new Promise((resolve, reject) => {
 		commit('LOADING_STORE')
-		axios.get('/api/GetStore', {params, withCredentials:true}).then(response => {
+		axios.get('/api/GetStore', {params, withCredentials:true}).then(async (response) => {
 			if(response.status == 200) {
 				commit('GET_STORE', response.data.store)
 			}
-			resolve(response)
+			await resolve(response)
+			setTimeout(() => {
+				commit('LOADING_STORE')
+			}, 500)
 		}).catch(error => {
 			reject(error)
 		})
-		setTimeout(() => {
-			commit('LOADING_STORE')
-		}, 1000)
+
 	}) 
 }
 

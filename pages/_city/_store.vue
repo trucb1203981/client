@@ -145,7 +145,7 @@ export default {
 		this.getStore()
 	},
 	mounted() {
-		this.offsetTab = this.$refs.target_store.offsetTop
+		// this.offsetTab = this.$refs.target_store.offsetTop
 	}
 }
 </script>
